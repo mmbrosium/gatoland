@@ -1,0 +1,167 @@
+:root{
+  --bg:#1b1726;
+  --bg2:#241e33;
+  --card:#2c2540;
+  --card2:#372e52;
+  --txt:#f3eefb;
+  --txt-fraco:#b3a9cc;
+  --borda:#423a5e;
+  --comum:#9aa5b1;
+  --raro:#3b82f6;
+  --epico:#a855f7;
+  --lendario:#f59e0b;
+  --ok:#34d399;
+  --header-h:112px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka',system-ui,-apple-system,sans-serif;
+  background:radial-gradient(1200px 600px at 50% -10%,var(--bg2),var(--bg)) fixed;
+  color:var(--txt);
+  min-height:100vh;
+}
+
+/* ===================== HEADER FIXO + ABAS ===================== */
+.topo{
+  position:sticky;top:0;z-index:50;
+  background:rgba(27,23,38,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--borda);
+  padding:12px 14px calc(12px + env(safe-area-inset-top,0));
+  padding-top:max(12px,env(safe-area-inset-top,0));
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.topo-titulo{font-size:1.4rem;font-weight:700}
+.abas{display:flex;gap:8px;width:100%;max-width:460px}
+.aba{
+  flex:1;font-family:inherit;font-size:1rem;font-weight:600;
+  background:var(--card);color:var(--txt-fraco);
+  border:1px solid var(--borda);border-radius:12px;padding:10px 8px;cursor:pointer;
+  transition:background .12s,color .12s,transform .08s;
+}
+.aba:active{transform:translateY(1px)}
+.aba.ativa{background:linear-gradient(180deg,#ffe08a,#f59e0b);color:#201a2e;border-color:transparent}
+
+/* ===================== CONTEÚDO / PAINÉIS ===================== */
+.conteudo{
+  max-width:640px;margin:0 auto;padding:18px 14px 30px;
+  display:flex;flex-direction:column;align-items:center;
+}
+.painel{display:none;width:100%;flex-direction:column;align-items:center;gap:18px}
+.painel.ativo{display:flex;animation:fade .25s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* ===================== HUD ===================== */
+.hud{display:flex;gap:12px;width:100%}
+.recurso{
+  flex:1;min-width:0;
+  background:var(--card);border:1px solid var(--borda);border-radius:16px;
+  padding:12px 14px;display:flex;align-items:center;gap:12px;
+}
+.recurso-icone{font-size:1.7rem;line-height:1}
+.recurso-info{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.recurso-info strong{font-size:1.25rem;font-weight:600}
+.recurso-max{color:var(--txt-fraco);font-size:.9rem}
+.rotulo{color:var(--txt-fraco);font-size:.75rem;text-transform:uppercase;letter-spacing:.5px}
+.timer{color:var(--txt-fraco);font-size:.72rem}
+.barra{height:6px;background:var(--bg);border-radius:99px;overflow:hidden;margin-top:3px}
+.barra-preench{height:100%;width:0;background:linear-gradient(90deg,#fbbf24,#f59e0b);transition:width .3s}
+.btn-mini{
+  align-self:flex-start;margin-top:3px;
+  background:var(--card2);color:var(--txt);border:1px solid var(--borda);
+  border-radius:8px;padding:2px 8px;font-family:inherit;font-size:.8rem;cursor:pointer;
+}
+.btn-mini:hover{background:var(--borda)}
+.btn-mini:disabled{opacity:.4;cursor:not-allowed}
+
+/* ===================== ROLETA ===================== */
+.roleta-area{width:100%;display:flex;flex-direction:column;align-items:center;gap:16px}
+.roleta-janela{
+  position:relative;width:100%;height:150px;overflow:hidden;
+  background:var(--bg);border:1px solid var(--borda);border-radius:18px;
+  box-shadow:inset 0 0 40px rgba(0,0,0,.45);
+}
+.roleta-janela::before,.roleta-janela::after{
+  content:"";position:absolute;top:0;bottom:0;width:60px;z-index:3;pointer-events:none;
+}
+.roleta-janela::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.roleta-janela::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.marcador{
+  position:absolute;left:50%;top:0;bottom:0;width:3px;z-index:4;
+  background:linear-gradient(180deg,transparent,var(--ok),transparent);
+  transform:translateX(-50%);box-shadow:0 0 12px var(--ok);
+}
+.trilho{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;gap:10px;padding:0 5px;will-change:transform}
+.celula{
+  width:118px;height:130px;flex:0 0 118px;
+  background:var(--card);border:2px solid var(--borda);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.celula img{width:86%;height:86%;object-fit:contain}
+.celula.r-comum{border-color:var(--comum)}
+.celula.r-raro{border-color:var(--raro)}
+.celula.r-epico{border-color:var(--epico)}
+.celula.r-lendario{border-color:var(--lendario);box-shadow:0 0 14px rgba(245,158,11,.5)}
+
+.btn-girar{
+  font-family:inherit;font-size:1.15rem;font-weight:600;color:#201a2e;
+  background:linear-gradient(180deg,#ffe08a,#f59e0b);
+  border:none;border-radius:14px;padding:14px 40px;cursor:pointer;
+  box-shadow:0 6px 0 #b9770a,0 10px 20px rgba(0,0,0,.35);transition:transform .08s,box-shadow .08s;
+}
+.btn-girar:active{transform:translateY(4px);box-shadow:0 2px 0 #b9770a,0 6px 12px rgba(0,0,0,.35)}
+.btn-girar:disabled{filter:grayscale(.6) brightness(.8);cursor:not-allowed;box-shadow:0 6px 0 #555}
+.aviso{color:var(--lendario);font-size:.9rem;min-height:1.1em;text-align:center}
+
+.resultado{
+  width:100%;background:var(--card);border:2px solid var(--borda);
+  border-radius:18px;padding:16px;display:flex;align-items:center;gap:16px;animation:surge .4s ease;
+}
+.resultado.oculto{display:none}
+.resultado img{width:84px;height:84px;object-fit:contain;flex:0 0 auto}
+.resultado .r-txt h3{font-size:1.25rem}
+.resultado .r-txt .tag{font-weight:600;font-size:.9rem}
+.resultado .r-txt p{color:var(--txt-fraco);font-size:.88rem;margin-top:2px}
+@keyframes surge{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+
+/* ===================== GATOPÉDIA ===================== */
+.pedia-topo{width:100%;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+.pedia-topo h2{font-weight:600;font-size:1.3rem}
+.pedia-contador{color:var(--txt-fraco);font-size:.9rem}
+.pedia{width:100%;display:flex;flex-direction:column;gap:20px}
+.pedia-grupo-titulo{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.pedia-grupo-titulo .cont{color:var(--txt-fraco);font-weight:500;letter-spacing:0;text-transform:none}
+.pedia-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.gato-card{
+  background:var(--card);border:2px solid var(--borda);border-radius:16px;
+  padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;
+  transition:transform .12s;position:relative;
+}
+.gato-card:hover{transform:translateY(-3px)}
+.gato-card img{width:70px;height:70px;object-fit:contain}
+.gato-card.bloqueado img{filter:grayscale(1) brightness(.3);opacity:.5}
+.gato-card .nome{font-weight:600;font-size:.85rem;line-height:1.1}
+.gato-card .meta{font-size:.72rem;color:var(--txt-fraco)}
+.gato-card .selo{position:absolute;top:6px;right:6px;font-size:.7rem;background:var(--bg);border:1px solid var(--borda);border-radius:99px;padding:1px 6px;color:var(--txt-fraco)}
+.gato-card.r-comum{border-color:var(--comum)}
+.gato-card.r-raro{border-color:var(--raro)}
+.gato-card.r-epico{border-color:var(--epico)}
+.gato-card.r-lendario{border-color:var(--lendario)}
+.gato-card.bloqueado{border-color:var(--borda)}
+.t-comum{color:var(--comum)} .t-raro{color:var(--raro)} .t-epico{color:var(--epico)} .t-lendario{color:var(--lendario)}
+
+/* ===================== RODAPÉ ===================== */
+.rodape{color:var(--txt-fraco);font-size:.78rem;display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0 30px;text-align:center}
+.btn-reset{background:none;border:1px solid var(--borda);color:var(--txt-fraco);border-radius:8px;padding:4px 10px;font-family:inherit;font-size:.78rem;cursor:pointer}
+.btn-reset:hover{color:var(--txt);border-color:var(--txt-fraco)}
+
+/* ===================== RESPONSIVO ===================== */
+@media(max-width:480px){
+  .celula{width:98px;flex-basis:98px;height:112px}
+  .roleta-janela{height:132px}
+  .topo-titulo{font-size:1.25rem}
+}
+@media(min-width:620px){
+  .pedia-grid{grid-template-columns:repeat(4,1fr)}
+}

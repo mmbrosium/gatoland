@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>GatoLand 🐱</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- HEADER FIXO com abas -->
+  <header class="topo">
+    <div class="topo-titulo">🐱 GatoLand</div>
+    <nav class="abas">
+      <button class="aba ativa" data-aba="roleta">🎰 Roleta</button>
+      <button class="aba" data-aba="colecao">📖 GatoPédia</button>
+    </nav>
+  </header>
+
+  <main class="conteudo">
+
+    <!-- ========================= ABA ROLETA ========================= -->
+    <section id="aba-roleta" class="painel ativo">
+      <div class="hud">
+        <div class="recurso" title="Gasta pra girar. Regenera com o tempo.">
+          <span class="recurso-icone">⚡</span>
+          <div class="recurso-info">
+            <strong id="energia-valor">0</strong><span class="recurso-max">/<span id="energia-max">10</span></span>
+            <div class="barra"><div id="energia-barra" class="barra-preench"></div></div>
+            <small id="energia-timer" class="timer">cheia</small>
+          </div>
+        </div>
+        <div class="recurso" title="Vem das duplicatas. Troque por energia.">
+          <span class="recurso-icone">🍖</span>
+          <div class="recurso-info">
+            <strong id="racao-valor">0</strong>
+            <small class="rotulo">ração</small>
+            <button id="btn-trocar" class="btn-mini" title="Troca ração por energia">+⚡</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="roleta-area">
+        <div class="roleta-janela">
+          <div class="marcador"></div>
+          <div id="trilho" class="trilho"></div>
+        </div>
+        <button id="btn-girar" class="btn-girar">GIRAR (−1 ⚡)</button>
+        <p id="aviso" class="aviso"></p>
+      </div>
+
+      <div id="resultado" class="resultado oculto" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- ======================== ABA GATOPÉDIA ======================= -->
+    <section id="aba-colecao" class="painel">
+      <div class="pedia-topo">
+        <h2>GatoPédia</h2>
+        <span class="pedia-contador"><span id="coletados">0</span>/<span id="total-gatos">0</span> descobertos</span>
+      </div>
+      <div id="colecao" class="pedia"></div>
+    </section>
+
+  </main>
+
+  <footer class="rodape">
+    <button id="btn-reset" class="btn-reset" title="Apaga seu progresso neste navegador">apagar progresso</button>
+    <span>GatoLand · HTML, CSS e JavaScript, sem framework.</span>
+  </footer>
+
+  <script src="js/game.js"></script>
+</body>
+</html>
