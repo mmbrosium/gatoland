@@ -3,24 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>GatoLand 🐱</title>
+  <title>GatoLand ❄️🐱</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <!-- HEADER FIXO com abas -->
+  <!-- neve ao fundo (atrás de tudo, sem roubar o foco) -->
+  <canvas id="neve" aria-hidden="true"></canvas>
+
+  <!-- HEADER = faixa de nuvens animadas + abas-telhado -->
   <header class="topo">
-    <div class="topo-titulo">🐱 GatoLand</div>
+    <div class="nuvens" aria-hidden="true">
+      <span class="nuvem n1"></span>
+      <span class="nuvem n2"></span>
+      <span class="nuvem n3"></span>
+    </div>
+    <div class="topo-titulo">GatoLand</div>
     <nav class="abas">
-      <button class="aba ativa" data-aba="roleta">🎰 Roleta</button>
-      <button class="aba" data-aba="colecao">📖 GatoPédia</button>
+      <button class="casa ativa" data-aba="roleta">
+        <span class="telhado"></span>
+        <span class="placa">Roleta</span>
+      </button>
+      <button class="casa" data-aba="colecao">
+        <span class="telhado"></span>
+        <span class="placa">GatoPédia</span>
+      </button>
     </nav>
   </header>
 
   <main class="conteudo">
-
     <!-- ========================= ABA ROLETA ========================= -->
     <section id="aba-roleta" class="painel ativo">
       <div class="hud">
@@ -62,13 +75,21 @@
       </div>
       <div id="colecao" class="pedia"></div>
     </section>
-
   </main>
 
   <footer class="rodape">
     <button id="btn-reset" class="btn-reset" title="Apaga seu progresso neste navegador">apagar progresso</button>
-    <span>GatoLand · HTML, CSS e JavaScript, sem framework.</span>
+    <span>GatoLand · HTML, CSS e JS, sem framework.</span>
   </footer>
+
+  <!-- gaveta (drawer) da carta -->
+  <div id="gaveta" class="gaveta oculto" aria-hidden="true">
+    <div class="gaveta-fundo" data-fechar></div>
+    <div class="gaveta-painel" role="dialog" aria-modal="true">
+      <button class="gaveta-x" data-fechar aria-label="Fechar">✕</button>
+      <div id="gaveta-conteudo"></div>
+    </div>
+  </div>
 
   <script src="js/game.js"></script>
 </body>
