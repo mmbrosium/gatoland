@@ -10,7 +10,50 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <!-- neve ao fundo (atrás de tudo, sem roubar o foco) -->
+  <!-- cenário ilustrado ao fundo (lua, montanhas, floresta, castelo) -->
+  <div class="cenario" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glowLua" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#eaf3ff" stop-opacity=".9"/>
+          <stop offset="35%" stop-color="#bcd6f0" stop-opacity=".35"/>
+          <stop offset="100%" stop-color="#bcd6f0" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="morro" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#16293b"/><stop offset="100%" stop-color="#0d1a28"/>
+        </linearGradient>
+      </defs>
+      <!-- brilho + lua -->
+      <circle cx="1070" cy="215" r="300" fill="url(#glowLua)"/>
+      <circle cx="1070" cy="215" r="112" fill="#f1f6ff"/>
+      <circle cx="1120" cy="185" r="16" fill="#dfe8f5" opacity=".5"/>
+      <circle cx="1035" cy="250" r="22" fill="#dfe8f5" opacity=".4"/>
+      <!-- montanhas distantes -->
+      <path d="M0 560 L250 420 L470 560 L700 400 L900 560 L1150 440 L1440 580 L1440 900 L0 900 Z" fill="#11222f" opacity=".85"/>
+      <!-- castelo -->
+      <g fill="#0e1b27" opacity=".92">
+        <rect x="520" y="430" width="150" height="150"/>
+        <rect x="505" y="400" width="22" height="180"/><rect x="663" y="400" width="22" height="180"/>
+        <rect x="575" y="360" width="40" height="220"/>
+        <polygon points="505,400 516,372 527,400"/><polygon points="663,400 674,372 685,400"/>
+        <polygon points="575,360 595,320 615,360"/>
+        <rect x="588" y="470" width="14" height="30" fill="#f0b64a" opacity=".8"/>
+      </g>
+      <!-- morros da frente -->
+      <path d="M0 640 Q360 560 720 640 T1440 640 L1440 900 L0 900 Z" fill="url(#morro)"/>
+      <!-- pinheiros -->
+      <g fill="#0a1824">
+        <polygon points="120,700 160,560 200,700"/><polygon points="130,660 160,600 190,660"/>
+        <polygon points="250,720 285,600 320,720"/>
+        <polygon points="1320,700 1360,560 1400,700"/><polygon points="1330,660 1360,600 1390,660"/>
+        <polygon points="1200,720 1235,610 1270,720"/>
+      </g>
+      <rect x="0" y="690" width="1440" height="210" fill="#081321"/>
+    </svg>
+    <div class="cenario-vinheta"></div>
+  </div>
+
+  <!-- neve ao fundo (sobre o cenário, sem roubar o foco) -->
   <canvas id="neve" aria-hidden="true"></canvas>
 
   <!-- HEADER = faixa de nuvens animadas + abas-telhado -->
@@ -20,6 +63,7 @@
       <span class="nuvem n2"></span>
       <span class="nuvem n3"></span>
     </div>
+    <button id="btn-instru" class="btn-instru" title="Instruções" aria-label="Instruções">?</button>
     <div class="topo-titulo">GatoLand</div>
     <nav class="abas">
       <button class="casa ativa" data-aba="roleta">
@@ -80,6 +124,23 @@
     <button id="btn-reset" class="btn-reset" title="Apaga seu progresso neste navegador">apagar progresso</button>
     <span>GatoLand · HTML, CSS e JS, sem framework.</span>
   </footer>
+
+  <!-- modal de instruções -->
+  <div id="instru" class="gaveta oculto" aria-hidden="true">
+    <div class="gaveta-fundo" data-fechar-instru></div>
+    <div class="gaveta-painel" role="dialog" aria-modal="true">
+      <button class="gaveta-x" data-fechar-instru aria-label="Fechar">✕</button>
+      <h3 class="instru-titulo">Como jogar</h3>
+      <div class="instru-item">
+        <span class="instru-ic">🎰</span>
+        <div><b>Roleta</b><p>Gaste energia pra girar e ganhar gatinhos. A energia volta sozinha com o tempo; gato repetido vira ração, que você troca por mais energia.</p></div>
+      </div>
+      <div class="instru-item">
+        <span class="instru-ic">📖</span>
+        <div><b>GatoPédia</b><p>Sua coleção. Toque em qualquer carta pra ver os atributos, a descrição e a habilidade do gato.</p></div>
+      </div>
+    </div>
+  </div>
 
   <!-- gaveta (drawer) da carta -->
   <div id="gaveta" class="gaveta oculto" aria-hidden="true">

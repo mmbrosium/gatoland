@@ -8,7 +8,7 @@ const STORAGE_KEY = 'gatoland:v1';
 
 const CONFIG = {
   energiaMax: 10, energiaInicial: 10, custoGiro: 1,
-  regenMs: 5 * 60 * 1000, racaoPorEnergia: 3, copiasPorNivel: 3,
+  regenMs: 3 * 60 * 1000, racaoPorEnergia: 3, copiasPorNivel: 3,
 };
 
 const RARIDADES = {
@@ -250,7 +250,14 @@ function abrirGaveta(id){
 }
 function fecharGaveta(){ gaveta.classList.add('oculto'); gaveta.setAttribute('aria-hidden','true'); }
 gaveta.querySelectorAll('[data-fechar]').forEach(el=>el.addEventListener('click',fecharGaveta));
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') fecharGaveta(); });
+
+/* modal de instruções */
+const instru=$('#instru');
+$('#btn-instru').addEventListener('click',()=>{ instru.classList.remove('oculto'); instru.setAttribute('aria-hidden','false'); });
+function fecharInstru(){ instru.classList.add('oculto'); instru.setAttribute('aria-hidden','true'); }
+instru.querySelectorAll('[data-fechar-instru]').forEach(el=>el.addEventListener('click',fecharInstru));
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ fecharGaveta(); fecharInstru(); } });
 
 /* ------------------------------------- roleta */
 const CELULAS_ESTEIRA=55, INDICE_VENCEDOR=48;
