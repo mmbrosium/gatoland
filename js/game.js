@@ -202,14 +202,14 @@ function renderColecao(){
         carta.innerHTML=`
           ${molduraHTML(c,false)}
           <div class="carta-topo"><span class="carta-nome">${c.nome}</span><span class="selo-copias">${tem.copias}x · Nv${nivelDoGato(c.id)}</span></div>
-          <div class="carta-rar t-${c.raridade}">${RARIDADES[c.raridade].nome}</div>
+          <div class="carta-rar b-${c.raridade}">${RARIDADES[c.raridade].nome}</div>
           <div class="carta-stats">${statsInline(c.attrs)}</div>
           <p class="carta-desc">${c.desc}</p>`;
       }else{
         carta.innerHTML=`
           ${molduraHTML(c,true)}
           <div class="carta-topo"><span class="carta-nome">???</span></div>
-          <div class="carta-rar t-${c.raridade}">${RARIDADES[c.raridade].nome}</div>
+          <div class="carta-rar b-${c.raridade}">${RARIDADES[c.raridade].nome}</div>
           <p class="carta-desc">Gire pra descobrir este gato.</p>`;
       }
       carta.addEventListener('click',()=>abrirGaveta(c.id));
@@ -259,8 +259,8 @@ function montarEsteira(vencedor){
   for(let i=0;i<CELULAS_ESTEIRA;i++){
     const g=(i===INDICE_VENCEDOR)?vencedor:gatoVisual();
     const cel=document.createElement('div');
-    cel.className=`celula r-${g.raridade}`;
-    cel.innerHTML=`<img src="${g.img}" alt="${g.nome}" />`;
+    cel.className='celula';
+    cel.innerHTML=molduraHTML(g,false);
     trilho.appendChild(cel);
   }
 }
@@ -330,19 +330,23 @@ btnReset.addEventListener('click',resetar);
     const qtd=Math.round(W*H/22000);
     flocos=Array.from({length:qtd},()=>({
       x:Math.random()*W, y:Math.random()*H,
-      s:Math.random()<.5?2:3,           // tamanho em px (bloquinho)
-      vy:0.25+Math.random()*0.65, vx:(Math.random()-0.5)*0.3,
-      a:0.25+Math.random()*0.35,
+      r:0.8+Math.random()*2.2,          // raio do floco (macio)
+      vy:0.25+Math.random()*0.7, vx:(Math.random()-0.5)*0.35,
+      fase:Math.random()*Math.PI*2,     // balanço lateral
+      a:0.2+Math.random()*0.4,
     }));
   }
   function loop(){
     ctx.clearRect(0,0,W,H);
     for(const f of flocos){
-      f.y+=f.vy; f.x+=f.vx;
-      if(f.y>H+4){ f.y=-4; f.x=Math.random()*W; }
-      if(f.x<-4) f.x=W; if(f.x>W+4) f.x=0;
-      ctx.fillStyle=`rgba(223,233,255,${f.a})`;
-      ctx.fillRect(Math.round(f.x),Math.round(f.y),f.s,f.s); // quadradinho = pixel
+      f.fase+=0.01;
+      f.y+=f.vy; f.x+=f.vx+Math.sin(f.fase)*0.3;
+      if(f.y>H+6){ f.y=-6; f.x=Math.random()*W; }
+      if(f.x<-6) f.x=W; if(f.x>W+6) f.x=0;
+      ctx.beginPath();
+      ctx.fillStyle=`rgba(226,236,255,${f.a})`;
+      ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+      ctx.fill();
     }
     requestAnimationFrame(loop);
   }
