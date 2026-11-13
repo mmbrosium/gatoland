@@ -283,7 +283,13 @@ function girar(){
     trilho.style.transition='transform 5s cubic-bezier(.11,.78,.16,1)';
     trilho.style.transform=`translateX(${-(alvo+jitter)}px)`;
   });
-  trilho.addEventListener('transitionend',()=>finalizarGiro(vencedor),{once:true});
+
+  // conclui o giro por evento OU por tempo — se a aba trocar, o transitionend
+  // é cancelado, então o timeout garante que não trave.
+  let feito=false;
+  const concluir=()=>{ if(feito) return; feito=true; clearTimeout(timer); finalizarGiro(vencedor); };
+  trilho.addEventListener('transitionend',concluir,{once:true});
+  const timer=setTimeout(concluir,5300);
 }
 function finalizarGiro(vencedor){
   const r=registrarGanho(vencedor);

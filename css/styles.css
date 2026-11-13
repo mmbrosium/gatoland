@@ -63,32 +63,22 @@ body{
 
 /* abas = casinhas com telhado nevado + placa de madeira */
 .abas{position:relative;z-index:2;display:flex;gap:18px;width:100%;max-width:470px;justify-content:center}
-.casa{flex:1;max-width:200px;background:none;border:none;cursor:pointer;padding:0;display:flex;flex-direction:column;align-items:center;font-family:inherit}
-.telhado{
-  width:74%;height:24px;margin-bottom:-4px;position:relative;z-index:2;
-  background:linear-gradient(180deg,#f3f8ff 0 42%,#cdd9ec 42% 100%);
-  clip-path:polygon(50% 0,100% 100%,0 100%);
-  filter:drop-shadow(0 3px 2px rgba(0,0,0,.4));
-  transition:filter .2s;
-}
+.casa{flex:1;max-width:210px;background:none;border:none;cursor:pointer;padding:0;font-family:inherit}
 .placa{
-  position:relative;z-index:1;width:100%;
-  font-family:'Cinzel',serif;font-weight:700;font-size:.92rem;letter-spacing:.5px;
-  color:#ffe9c2;text-align:center;padding:10px 8px;border-radius:8px;
-  background:linear-gradient(180deg,#8a5a31,#5f3b20);
-  border:2px solid #3f2713;
-  box-shadow:0 4px 0 #2e1b0d,0 8px 12px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12);
-  transition:box-shadow .2s,color .2s,transform .08s;
+  position:relative;width:100%;
+  font-family:'Cinzel',serif;font-weight:700;font-size:.98rem;letter-spacing:.5px;
+  color:var(--ouro);text-align:center;padding:12px 10px;border-radius:12px;
+  background:linear-gradient(180deg,#17293b,#0b1724);
+  border:2px solid var(--ouro-esc);
+  box-shadow:0 5px 12px rgba(0,0,0,.45),inset 0 1px 0 rgba(232,200,132,.12);
+  transition:box-shadow .2s,color .2s,border-color .2s,transform .08s;
 }
-.placa::before,.placa::after{content:"";position:absolute;top:7px;width:5px;height:5px;border-radius:50%;background:#e8c884;box-shadow:inset 0 0 0 1px #3f2713}
-.placa::before{left:9px}.placa::after{right:9px}
 .casa:active .placa{transform:translateY(2px)}
 .casa.ativa .placa{
-  color:#fff7e4;border-color:var(--ouro);
-  box-shadow:0 4px 0 #2e1b0d,0 0 18px rgba(232,200,132,.65),inset 0 0 10px rgba(232,200,132,.3);
-  text-shadow:0 0 8px rgba(255,220,150,.8);
+  color:#fff3d6;border-color:var(--ouro);
+  box-shadow:0 5px 12px rgba(0,0,0,.45),0 0 18px rgba(232,200,132,.55),inset 0 0 12px rgba(232,200,132,.22);
+  text-shadow:0 0 10px rgba(255,220,150,.7);
 }
-.casa.ativa .telhado{filter:drop-shadow(0 0 7px rgba(232,200,132,.6))}
 
 /* ============================ CONTEÚDO ============================ */
 .conteudo{max-width:680px;margin:0 auto;padding:20px 14px 30px;display:flex;flex-direction:column;align-items:center}
@@ -190,6 +180,10 @@ body{
   transition:transform .12s,box-shadow .12s;overflow:hidden;
 }
 .carta:hover{transform:translateY(-4px);box-shadow:0 10px 22px rgba(0,0,0,.5),inset 0 0 0 1px rgba(232,200,132,.3)}
+/* cantos dourados (filigrana estilo NotFM) */
+.carta::before,.carta::after{content:"";position:absolute;top:7px;width:15px;height:15px;border:2px solid var(--ouro);opacity:.5;pointer-events:none}
+.carta::before{left:7px;border-right:none;border-bottom:none;border-radius:5px 0 0 0}
+.carta::after{right:7px;border-left:none;border-bottom:none;border-radius:0 5px 0 0}
 .carta .moldura{width:78%}
 .carta.bloqueado .moldura{filter:none}
 .carta.bloqueado .moldura img{filter:grayscale(1) brightness(.3);opacity:.55}
