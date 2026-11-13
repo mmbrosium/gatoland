@@ -13,9 +13,9 @@ const CONFIG = {
 
 const RARIDADES = {
   comum:    { nome:'Comum',    peso:60, racao:1 },
-  raro:     { nome:'Raro',     peso:25, racao:3 },
-  epico:    { nome:'Épico',    peso:12, racao:6 },
-  lendario: { nome:'Lendário', peso:3,  racao:15 },
+  raro:     { nome:'Raro',     peso:25, racao:1 },
+  epico:    { nome:'Épico',    peso:12, racao:2 },
+  lendario: { nome:'Lendário', peso:3,  racao:5 },
 };
 const ORDEM_RARIDADE = ['comum','raro','epico','lendario'];
 
