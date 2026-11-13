@@ -23,6 +23,15 @@
           <stop offset="0%" stop-color="#16293b"/><stop offset="100%" stop-color="#0d1a28"/>
         </linearGradient>
       </defs>
+      <!-- estrelas -->
+      <g fill="#dfe8f5">
+        <circle cx="180" cy="120" r="2.2" opacity=".8"/><circle cx="320" cy="200" r="1.6" opacity=".5"/>
+        <circle cx="90" cy="260" r="1.8" opacity=".6"/><circle cx="430" cy="140" r="2.4" opacity=".7"/>
+        <circle cx="560" cy="90" r="1.5" opacity=".5"/><circle cx="700" cy="180" r="2" opacity=".65"/>
+        <circle cx="260" cy="320" r="1.4" opacity=".45"/><circle cx="620" cy="260" r="1.7" opacity=".55"/>
+        <circle cx="1330" cy="150" r="2.2" opacity=".7"/><circle cx="1250" cy="300" r="1.6" opacity=".5"/>
+        <circle cx="1400" cy="260" r="1.8" opacity=".6"/><circle cx="820" cy="110" r="1.6" opacity=".5"/>
+      </g>
       <!-- brilho + lua -->
       <circle cx="1070" cy="215" r="300" fill="url(#glowLua)"/>
       <circle cx="1070" cy="215" r="112" fill="#f1f6ff"/>
@@ -41,14 +50,19 @@
       </g>
       <!-- morros da frente -->
       <path d="M0 640 Q360 560 720 640 T1440 640 L1440 900 L0 900 Z" fill="url(#morro)"/>
-      <!-- pinheiros -->
-      <g fill="#0a1824">
-        <polygon points="120,700 160,560 200,700"/><polygon points="130,660 160,600 190,660"/>
-        <polygon points="250,720 285,600 320,720"/>
-        <polygon points="1320,700 1360,560 1400,700"/><polygon points="1330,660 1360,600 1390,660"/>
-        <polygon points="1200,720 1235,610 1270,720"/>
+      <!-- pinheiros do fundo -->
+      <g fill="#0b1a28" opacity=".9">
+        <polygon points="360,660 390,560 420,660"/><polygon points="980,660 1010,565 1040,660"/>
+        <polygon points="1100,655 1125,575 1150,655"/><polygon points="60,665 95,575 130,665"/>
       </g>
-      <rect x="0" y="690" width="1440" height="210" fill="#081321"/>
+      <!-- pinheiros da frente -->
+      <g fill="#081520">
+        <polygon points="120,710 160,555 200,710"/><polygon points="128,665 160,595 192,665"/>
+        <polygon points="250,730 288,595 326,730"/><polygon points="262,685 288,630 314,685"/>
+        <polygon points="1320,710 1360,555 1400,710"/><polygon points="1328,665 1360,595 1392,665"/>
+        <polygon points="1190,730 1228,600 1266,730"/><polygon points="1202,685 1228,630 1254,685"/>
+      </g>
+      <rect x="0" y="700" width="1440" height="210" fill="#060f1a"/>
     </svg>
     <div class="cenario-vinheta"></div>
   </div>
@@ -66,12 +80,9 @@
     <button id="btn-instru" class="btn-instru" title="Instruções" aria-label="Instruções">?</button>
     <div class="topo-titulo">GatoLand</div>
     <nav class="abas">
-      <button class="casa ativa" data-aba="roleta">
-        <span class="placa">Roleta</span>
-      </button>
-      <button class="casa" data-aba="colecao">
-        <span class="placa">GatoPédia</span>
-      </button>
+      <button class="aba ativa" data-aba="roleta">Roleta</button>
+      <span class="sep">|</span>
+      <button class="aba" data-aba="colecao">GatoPédia</button>
     </nav>
   </header>
 

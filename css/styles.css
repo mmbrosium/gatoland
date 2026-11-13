@@ -26,8 +26,8 @@ body{
   font-family:'Nunito',system-ui,sans-serif;
   color:var(--txt);
   background:
-    radial-gradient(900px 500px at 50% -8%,rgba(180,210,255,.10),transparent 60%),
-    linear-gradient(180deg,var(--noite-1),var(--noite-2) 55%,var(--noite-3));
+    radial-gradient(800px 440px at 50% 12%,rgba(180,210,255,.08),transparent 60%),
+    linear-gradient(180deg,#03060a 0%,#06101b 16%,var(--noite-2) 52%,var(--noite-3) 100%);
   background-attachment:fixed;
   min-height:100vh;position:relative;
 }
@@ -40,8 +40,8 @@ body{
 /* ============================ HEADER: NUVENS + ABAS ============================ */
 .topo{
   position:sticky;top:0;z-index:40;overflow:hidden;
-  background:linear-gradient(180deg,rgba(12,28,43,.96),rgba(19,39,58,.82));
-  border-bottom:1px solid rgba(232,200,132,.25);
+  background:linear-gradient(180deg,#03060a 0%,rgba(5,11,20,.92) 70%,rgba(8,20,33,.55) 100%);
+  border-bottom:1px solid rgba(232,200,132,.18);
   padding:12px 12px 16px;padding-top:max(12px,env(safe-area-inset-top,0));
   display:flex;flex-direction:column;align-items:center;gap:12px;
   box-shadow:0 6px 20px rgba(0,0,0,.35);
@@ -71,24 +71,18 @@ body{
   box-shadow:0 3px 8px rgba(0,0,0,.4);transition:box-shadow .2s,color .2s}
 .btn-instru:hover{color:#fff3d6;box-shadow:0 0 14px rgba(232,200,132,.55)}
 
-/* abas = casinhas com telhado nevado + placa de madeira */
-.abas{position:relative;z-index:2;display:flex;gap:18px;width:100%;max-width:470px;justify-content:center}
-.casa{flex:1;max-width:210px;background:none;border:none;cursor:pointer;padding:0;font-family:inherit}
-.placa{
-  position:relative;width:100%;
-  font-family:'Cinzel',serif;font-weight:700;font-size:.98rem;letter-spacing:.5px;
-  color:var(--ouro);text-align:center;padding:12px 10px;border-radius:12px;
-  background:linear-gradient(180deg,#17293b,#0b1724);
-  border:2px solid var(--ouro-esc);
-  box-shadow:0 5px 12px rgba(0,0,0,.45),inset 0 1px 0 rgba(232,200,132,.12);
-  transition:box-shadow .2s,color .2s,border-color .2s,transform .08s;
+/* abas = texto com separador | */
+.abas{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:16px}
+.aba{
+  background:none;border:none;cursor:pointer;padding:4px 2px;font-family:'Cinzel',serif;
+  font-weight:700;font-size:1.05rem;letter-spacing:1px;color:rgba(232,200,132,.45);
+  position:relative;transition:color .2s,text-shadow .2s;
 }
-.casa:active .placa{transform:translateY(2px)}
-.casa.ativa .placa{
-  color:#fff3d6;border-color:var(--ouro);
-  box-shadow:0 5px 12px rgba(0,0,0,.45),0 0 18px rgba(232,200,132,.55),inset 0 0 12px rgba(232,200,132,.22);
-  text-shadow:0 0 10px rgba(255,220,150,.7);
-}
+.aba::after{content:"";position:absolute;left:12%;right:12%;bottom:-3px;height:2px;border-radius:2px;background:var(--ouro);opacity:0;transition:opacity .2s}
+.aba:hover{color:rgba(232,200,132,.8)}
+.aba.ativa{color:#ffe6ba;text-shadow:0 0 12px rgba(232,200,132,.6)}
+.aba.ativa::after{opacity:1;box-shadow:0 0 8px rgba(232,200,132,.7)}
+.sep{color:rgba(232,200,132,.3);font-size:1.1rem;user-select:none}
 
 /* ============================ CONTEÚDO ============================ */
 .conteudo{max-width:680px;margin:0 auto;padding:20px 14px 30px;display:flex;flex-direction:column;align-items:center}

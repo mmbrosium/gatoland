@@ -153,9 +153,9 @@ function statsInline(a){
 }
 
 /* troca de abas */
-document.querySelectorAll('.casa').forEach(btn=>{
+document.querySelectorAll('.aba').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    document.querySelectorAll('.casa').forEach(b=>b.classList.remove('ativa'));
+    document.querySelectorAll('.aba').forEach(b=>b.classList.remove('ativa'));
     document.querySelectorAll('.painel').forEach(p=>p.classList.remove('ativo'));
     btn.classList.add('ativa');
     $('#aba-'+btn.dataset.aba).classList.add('ativo');
