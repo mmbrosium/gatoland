@@ -145,7 +145,11 @@ let girando=false;
 function molduraHTML(cat, bloqueado){
   const cls = bloqueado ? '' : 'r-'+cat.raridade;
   const alt = bloqueado ? '???' : cat.nome;
-  return `<div class="moldura ${cls}"><img src="${cat.img}" alt="${alt}" /></div>`;
+  // camada borrada preenche o círculo (fim do "quadrado sobre bola"); a nítida fica por cima
+  return `<div class="moldura ${cls}">`+
+           `<img class="moldura-bg" src="${cat.img}" alt="" aria-hidden="true" />`+
+           `<img class="moldura-fg" src="${cat.img}" alt="${alt}" />`+
+         `</div>`;
 }
 function statsInline(a){
   return `<span title="Ataque">⚔️${a.atk}</span><span title="Defesa">🛡️${a.def}</span>`+
@@ -237,7 +241,8 @@ function abrirGaveta(id){
         <div class="gstat">❤️ Vida <b>${c.attrs.vida}</b></div>
       </div>
       <p class="gaveta-desc">${c.desc}</p>
-      <div class="gaveta-hab"><b>Habilidade —</b> ${c.hab}</div>`;
+      <div class="gaveta-hab"><b>Habilidade —</b> ${c.hab}</div>
+      <button class="gaveta-verfig" data-verfig>🔍 Ver figurinha / salvar</button>`;
   }else{
     corpo.innerHTML=`
       <div class="gaveta-cab">
@@ -247,9 +252,26 @@ function abrirGaveta(id){
       <p class="gaveta-trava">🔒 Gato ainda não descoberto.<br>Gire a roleta pra encontrá-lo!</p>`;
   }
   gaveta.classList.remove('oculto'); gaveta.setAttribute('aria-hidden','false');
+  if(tem){
+    const m=corpo.querySelector('.moldura'); if(m) m.addEventListener('click',()=>abrirFigura(c));
+    const b=corpo.querySelector('[data-verfig]'); if(b) b.addEventListener('click',()=>abrirFigura(c));
+  }
 }
 function fecharGaveta(){ gaveta.classList.add('oculto'); gaveta.setAttribute('aria-hidden','true'); }
 gaveta.querySelectorAll('[data-fechar]').forEach(el=>el.addEventListener('click',fecharGaveta));
+
+/* lightbox da figurinha (ver inteira + salvar) */
+const figura=$('#figura');
+function abrirFigura(c){
+  $('#figura-img').src=c.img;
+  $('#figura-img').alt=c.nome;
+  $('#figura-nome').textContent=c.nome;
+  const save=$('#figura-save');
+  save.href=c.img; save.setAttribute('download', c.nome+'.png');
+  figura.classList.remove('oculto'); figura.setAttribute('aria-hidden','false');
+}
+function fecharFigura(){ figura.classList.add('oculto'); figura.setAttribute('aria-hidden','true'); }
+figura.querySelectorAll('[data-fechar-figura]').forEach(el=>el.addEventListener('click',fecharFigura));
 
 /* modal de instruções */
 const instru=$('#instru');
@@ -257,7 +279,7 @@ $('#btn-instru').addEventListener('click',()=>{ instru.classList.remove('oculto'
 function fecharInstru(){ instru.classList.add('oculto'); instru.setAttribute('aria-hidden','true'); }
 instru.querySelectorAll('[data-fechar-instru]').forEach(el=>el.addEventListener('click',fecharInstru));
 
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ fecharGaveta(); fecharInstru(); } });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ fecharGaveta(); fecharInstru(); fecharFigura(); } });
 
 /* ------------------------------------- roleta */
 const CELULAS_ESTEIRA=55, INDICE_VENCEDOR=48;
@@ -335,35 +357,55 @@ btnReset.addEventListener('click',resetar);
 /* =========================================================================
    NEVE (fundo discreto, pixelada)
    ========================================================================= */
-(function neve(){
+(function particulas(){
   const cv=document.getElementById('neve'); const ctx=cv.getContext('2d');
-  let flocos=[], W, H;
+  let p=[], W, H;
+  // paletas por clima
+  const CORES_FOLHA=['#c47a3a','#b85c2a','#8a9a3a','#c99a2e'];
+  const CORES_PETALA=['#e9bcd8','#d7a0c8','#f0cfe4'];
+  function clima(){ return window.__clima || 'neve'; }
   function dim(){ W=cv.width=innerWidth; H=cv.height=innerHeight; criar(); }
   function criar(){
-    const qtd=Math.round(W*H/22000);
-    flocos=Array.from({length:qtd},()=>({
+    const c=clima();
+    const qtd = c==='nenhum' ? 0 : Math.round(W*H/ (c==='neve'?22000:30000));
+    p=Array.from({length:qtd},()=>novo());
+  }
+  function novo(){
+    const c=clima();
+    const cor = c==='folhas'?CORES_FOLHA[Math.floor(Math.random()*CORES_FOLHA.length)]
+             : c==='petalas'?CORES_PETALA[Math.floor(Math.random()*CORES_PETALA.length)]
+             : null;
+    return {
       x:Math.random()*W, y:Math.random()*H,
-      r:0.8+Math.random()*2.2,          // raio do floco (macio)
-      vy:0.25+Math.random()*0.7, vx:(Math.random()-0.5)*0.35,
-      fase:Math.random()*Math.PI*2,     // balanço lateral
-      a:0.2+Math.random()*0.4,
-    }));
+      r:0.8+Math.random()*2.4, vy:0.22+Math.random()*0.7, vx:(Math.random()-0.5)*0.4,
+      fase:Math.random()*Math.PI*2, giro:Math.random()*Math.PI*2, vgiro:(Math.random()-.5)*.06,
+      a:0.2+Math.random()*0.45, cor,
+    };
   }
   function loop(){
     ctx.clearRect(0,0,W,H);
-    for(const f of flocos){
-      f.fase+=0.01;
-      f.y+=f.vy; f.x+=f.vx+Math.sin(f.fase)*0.3;
+    const c=clima();
+    for(const f of p){
+      f.fase+=0.01; f.giro+=f.vgiro;
+      f.y+=f.vy; f.x+=f.vx+Math.sin(f.fase)*(c==='neve'?0.3:0.6);
       if(f.y>H+6){ f.y=-6; f.x=Math.random()*W; }
       if(f.x<-6) f.x=W; if(f.x>W+6) f.x=0;
-      ctx.beginPath();
-      ctx.fillStyle=`rgba(226,236,255,${f.a})`;
-      ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
-      ctx.fill();
+      if(c==='neve'){
+        ctx.beginPath(); ctx.fillStyle=`rgba(226,236,255,${f.a})`;
+        ctx.arc(f.x,f.y,f.r,0,Math.PI*2); ctx.fill();
+      }else{
+        // folha/pétala: pequeno retângulo girando
+        ctx.save(); ctx.translate(f.x,f.y); ctx.rotate(f.giro);
+        ctx.globalAlpha=f.a; ctx.fillStyle=f.cor||'#c47a3a';
+        ctx.fillRect(-f.r, -f.r*1.6, f.r*2, f.r*3.2);
+        ctx.restore(); ctx.globalAlpha=1;
+      }
     }
     requestAnimationFrame(loop);
   }
-  addEventListener('resize',dim); dim(); loop();
+  addEventListener('resize',dim);
+  addEventListener('clima-mudou',criar); // o cenario.js troca o clima
+  dim(); loop();
 })();
 
 /* boot */

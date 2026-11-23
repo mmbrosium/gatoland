@@ -10,64 +10,13 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <!-- cenário ilustrado ao fundo (lua, montanhas, floresta, castelo) -->
+  <!-- cenário procedural (gerado pelo cenario.js, muda a cada abertura) -->
   <div class="cenario" aria-hidden="true">
-    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="glowLua" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#eaf3ff" stop-opacity=".9"/>
-          <stop offset="35%" stop-color="#bcd6f0" stop-opacity=".35"/>
-          <stop offset="100%" stop-color="#bcd6f0" stop-opacity="0"/>
-        </radialGradient>
-        <linearGradient id="morro" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#16293b"/><stop offset="100%" stop-color="#0d1a28"/>
-        </linearGradient>
-      </defs>
-      <!-- estrelas -->
-      <g fill="#dfe8f5">
-        <circle cx="180" cy="120" r="2.2" opacity=".8"/><circle cx="320" cy="200" r="1.6" opacity=".5"/>
-        <circle cx="90" cy="260" r="1.8" opacity=".6"/><circle cx="430" cy="140" r="2.4" opacity=".7"/>
-        <circle cx="560" cy="90" r="1.5" opacity=".5"/><circle cx="700" cy="180" r="2" opacity=".65"/>
-        <circle cx="260" cy="320" r="1.4" opacity=".45"/><circle cx="620" cy="260" r="1.7" opacity=".55"/>
-        <circle cx="1330" cy="150" r="2.2" opacity=".7"/><circle cx="1250" cy="300" r="1.6" opacity=".5"/>
-        <circle cx="1400" cy="260" r="1.8" opacity=".6"/><circle cx="820" cy="110" r="1.6" opacity=".5"/>
-      </g>
-      <!-- brilho + lua -->
-      <circle cx="1070" cy="215" r="300" fill="url(#glowLua)"/>
-      <circle cx="1070" cy="215" r="112" fill="#f1f6ff"/>
-      <circle cx="1120" cy="185" r="16" fill="#dfe8f5" opacity=".5"/>
-      <circle cx="1035" cy="250" r="22" fill="#dfe8f5" opacity=".4"/>
-      <!-- montanhas distantes -->
-      <path d="M0 560 L250 420 L470 560 L700 400 L900 560 L1150 440 L1440 580 L1440 900 L0 900 Z" fill="#11222f" opacity=".85"/>
-      <!-- castelo -->
-      <g fill="#0e1b27" opacity=".92">
-        <rect x="520" y="430" width="150" height="150"/>
-        <rect x="505" y="400" width="22" height="180"/><rect x="663" y="400" width="22" height="180"/>
-        <rect x="575" y="360" width="40" height="220"/>
-        <polygon points="505,400 516,372 527,400"/><polygon points="663,400 674,372 685,400"/>
-        <polygon points="575,360 595,320 615,360"/>
-        <rect x="588" y="470" width="14" height="30" fill="#f0b64a" opacity=".8"/>
-      </g>
-      <!-- morros da frente -->
-      <path d="M0 640 Q360 560 720 640 T1440 640 L1440 900 L0 900 Z" fill="url(#morro)"/>
-      <!-- pinheiros do fundo -->
-      <g fill="#0b1a28" opacity=".9">
-        <polygon points="360,660 390,560 420,660"/><polygon points="980,660 1010,565 1040,660"/>
-        <polygon points="1100,655 1125,575 1150,655"/><polygon points="60,665 95,575 130,665"/>
-      </g>
-      <!-- pinheiros da frente -->
-      <g fill="#081520">
-        <polygon points="120,710 160,555 200,710"/><polygon points="128,665 160,595 192,665"/>
-        <polygon points="250,730 288,595 326,730"/><polygon points="262,685 288,630 314,685"/>
-        <polygon points="1320,710 1360,555 1400,710"/><polygon points="1328,665 1360,595 1392,665"/>
-        <polygon points="1190,730 1228,600 1266,730"/><polygon points="1202,685 1228,630 1254,685"/>
-      </g>
-      <rect x="0" y="700" width="1440" height="210" fill="#060f1a"/>
-    </svg>
+    <div class="cenario-svg"></div>
     <div class="cenario-vinheta"></div>
   </div>
 
-  <!-- neve ao fundo (sobre o cenário, sem roubar o foco) -->
+  <!-- partículas (neve/folhas) sobre o cenário -->
   <canvas id="neve" aria-hidden="true"></canvas>
 
   <!-- HEADER = faixa de nuvens animadas + abas-telhado -->
@@ -162,6 +111,18 @@
     </div>
   </div>
 
+  <!-- lightbox da figurinha -->
+  <div id="figura" class="figura oculto" aria-hidden="true">
+    <div class="figura-fundo" data-fechar-figura></div>
+    <div class="figura-box" role="dialog" aria-modal="true">
+      <button class="gaveta-x" data-fechar-figura aria-label="Fechar">✕</button>
+      <img id="figura-img" src="" alt="" />
+      <h3 id="figura-nome"></h3>
+      <a id="figura-save" class="figura-save" download>⬇ Salvar figurinha</a>
+    </div>
+  </div>
+
+  <script src="js/cenario.js"></script>
   <script src="js/game.js"></script>
 </body>
 </html>
